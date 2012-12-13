@@ -340,6 +340,8 @@ class ClearableFileInput(FileInput):
     template_with_initial = '%(initial_text)s: %(initial)s %(clear_template)s<br />%(input_text)s: %(input)s'
 
     template_with_clear = '%(clear)s <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label>'
+    
+    url_markup_template = '<a href="{0}">{1}</a>'
 
     def clear_checkbox_name(self, name):
         """
@@ -366,7 +368,7 @@ class ClearableFileInput(FileInput):
 
         if value and hasattr(value, "url"):
             template = self.template_with_initial
-            substitutions['initial'] = format_html('<a href="{0}">{1}</a>',
+            substitutions['initial'] = format_html(self.url_markup_template,
                                                    value.url,
                                                    force_text(value))
             if not self.is_required:
